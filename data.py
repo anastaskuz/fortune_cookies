@@ -56,5 +56,10 @@ QUESTIONS = {
     2.1: '*Взять еще одно печенье?*',
 }
 
+
 def get_paper(papers: tuple = PAPERS):
     return random.choice(papers)
+
+
+def generate_paper():
+    pass

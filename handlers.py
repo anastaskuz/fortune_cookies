@@ -8,18 +8,17 @@ from create_bot import BOT
 from keyboards import inline_kb_yon, inline_kb_start, kb_start
 from data import MESSAGES, QUESTIONS, get_paper
 from states import States
-
-
-USERS = {}
+from work_db import check_id_users, add_user
 
 
 # ответ на запуск бота
 # @DP.message_handler(commands=['start'])
 async def command_start(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
+    user_list = check_id_users()
 
-    if not (user_id in USERS.keys()):
-        USERS[user_id] = [0]
+    if not (user_id in user_list):
+        add_user(user_id)
         logger.info(f'Новый пользователь! {user_id}')
 
     msg = MESSAGES[0]
@@ -105,6 +104,8 @@ async def callback_button_yes(callback_query: types.CallbackQuery, state: FSMCon
         msg = MESSAGES[2.1].replace('PAPER', paper)
         quest = QUESTIONS[2.1]
 
+        # !!! добавить функцию добавления бумажки в бд !!!
+
         # смена состояния
         await state.set_state(States.step_21)
         logger.info(f'Состояние {user_id} сменилось -> {await state.get_state(callback_query.from_user.id)}')
@@ -142,7 +143,7 @@ async def callback_button_start(callback_query: types.CallbackQuery, state: FSMC
     msg = MESSAGES[0]
     await BOT.send_message(callback_query.from_user.id,
                            msg, reply_markup=inline_kb_yon, parse_mode="Markdown")
-    USERS[user_id][0] = 0
+
     # смена состояния
     await state.set_state(States.step_0)
     logger.info(f'Состояние {user_id} сменилось -> {await state.get_state(callback_query.from_user.id)}')
