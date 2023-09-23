@@ -83,7 +83,6 @@ def check_id_users():
 
         finally:
             close_db(db, cursor)
-    pass
 
 
 def add_user(user_id):
@@ -103,3 +102,11 @@ def add_user(user_id):
 
         finally:
             close_db(db, cursor)
+
+
+def check_user_papers():
+    pass
+
+
+def add_paper():
+    pass
