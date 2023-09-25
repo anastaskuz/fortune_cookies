@@ -1,5 +1,6 @@
 run.bat
 *.db
+img/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

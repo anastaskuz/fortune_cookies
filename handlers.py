@@ -1,7 +1,9 @@
 # from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram import types, Dispatcher
+from aiogram.types import InputFile
 from loguru import logger
+import os
 
 # from create_bot import DP
 from create_bot import BOT
@@ -24,6 +26,8 @@ async def command_start(message: types.Message, state: FSMContext):
 
     msg = MESSAGES[0]
     quest = QUESTIONS[0]
+    photo = os.getenv('PATH_FOR_IMG') + '0.jpg'
+    await BOT.send_photo(message.from_user.id, photo=InputFile(photo))
     await BOT.send_message(message.from_user.id,
                            msg, reply_markup=kb_start)
     await BOT.send_message(message.from_user.id,
@@ -44,17 +48,21 @@ async def callback_button_no(callback_query: types.CallbackQuery, state: FSMCont
 
     if state_user_check == 'States:step_0':
         msg = MESSAGES[1.0]
+        photo = os.getenv('PATH_FOR_IMG') + '1_0.jpg'
+        await BOT.send_photo(callback_query.from_user.id, photo=InputFile(photo))
         await BOT.send_message(callback_query.from_user.id,
                                msg, reply_markup=inline_kb_start)
 
     elif state_user_check == 'States:step_1':
         msg = MESSAGES[2.0]
         quest = QUESTIONS[2.0]
+        photo = os.getenv('PATH_FOR_IMG') + '2_0.jpg'
 
         # смена состояния
         await state.set_state(States.step_20)
         logger.info(f'Состояние {user_id} сменилось -> {await state.get_state(callback_query.from_user.id)}')
 
+        await BOT.send_photo(callback_query.from_user.id, photo=InputFile(photo))
         await BOT.send_message(callback_query.from_user.id,
                                msg, parse_mode="Markdown")
         await BOT.send_message(callback_query.from_user.id,
@@ -62,21 +70,25 @@ async def callback_button_no(callback_query: types.CallbackQuery, state: FSMCont
 
     elif state_user_check == 'States:step_20':
         msg = MESSAGES[4.0]
+        photo = os.getenv('PATH_FOR_IMG') + '4_0.jpg'
 
         # смена состояния
         await state.set_state(States.step_0)
         logger.info(f'Состояние {user_id} сменилось -> {await state.get_state(callback_query.from_user.id)}')
 
+        await BOT.send_photo(callback_query.from_user.id, photo=InputFile(photo))
         await BOT.send_message(callback_query.from_user.id,
                                msg, reply_markup=inline_kb_start)
 
     elif state_user_check == 'States:step_21':
         msg = MESSAGES[3.0]
+        photo = os.getenv('PATH_FOR_IMG') + '3_0.jpg'
 
         # смена состояния
         await state.set_state(States.step_0)
         logger.info(f'Состояние {user_id} сменилось -> {await state.get_state(callback_query.from_user.id)}')
 
+        await BOT.send_photo(callback_query.from_user.id, photo=InputFile(photo))
         await BOT.send_message(callback_query.from_user.id,
                                msg, reply_markup=inline_kb_start)
 
@@ -90,11 +102,13 @@ async def callback_button_yes(callback_query: types.CallbackQuery, state: FSMCon
     if state_user_check == 'States:step_0':
         msg = MESSAGES[1.1]
         quest = QUESTIONS[1.1]
+        photo = os.getenv('PATH_FOR_IMG') + '1_1.jpg'
 
         # смена состояния
         await state.set_state(States.step_1)
         logger.info(f'Состояние {user_id} сменилось -> {await state.get_state(callback_query.from_user.id)}')
 
+        await BOT.send_photo(callback_query.from_user.id, photo=InputFile(photo))
         await BOT.send_message(callback_query.from_user.id,
                                msg, parse_mode="Markdown")
         await BOT.send_message(callback_query.from_user.id,
@@ -104,6 +118,7 @@ async def callback_button_yes(callback_query: types.CallbackQuery, state: FSMCon
         paper = get_paper()
         msg = MESSAGES[2.1].replace('PAPER', paper)
         quest = QUESTIONS[2.1]
+        photo = os.getenv('PATH_FOR_IMG') + '2_1.jpg'
 
         # !!! добавить функцию добавления бумажки в бд !!!
 
@@ -111,6 +126,7 @@ async def callback_button_yes(callback_query: types.CallbackQuery, state: FSMCon
         await state.set_state(States.step_21)
         logger.info(f'Состояние {user_id} сменилось -> {await state.get_state(callback_query.from_user.id)}')
 
+        await BOT.send_photo(callback_query.from_user.id, photo=InputFile(photo))
         await BOT.send_message(callback_query.from_user.id,
                                msg, parse_mode="Markdown")
         await BOT.send_message(callback_query.from_user.id,
@@ -118,21 +134,25 @@ async def callback_button_yes(callback_query: types.CallbackQuery, state: FSMCon
 
     elif state_user_check == 'States:step_20':
         msg = MESSAGES[4.1]
+        photo = os.getenv('PATH_FOR_IMG') + '4_1.jpg'
 
         # смена состояния
         await state.set_state(States.step_0)
         logger.info(f'Состояние {user_id} сменилось -> {await state.get_state(callback_query.from_user.id)}')
 
+        await BOT.send_photo(callback_query.from_user.id, photo=InputFile(photo))
         await BOT.send_message(callback_query.from_user.id,
                                msg, reply_markup=inline_kb_start)
 
     elif state_user_check == 'States:step_21':
         msg = MESSAGES[3.1]
+        photo = os.getenv('PATH_FOR_IMG') + '3_1.jpg'
 
         # смена состояния
         await state.set_state(States.step_0)
         logger.info(f'Состояние {user_id} сменилось -> {await state.get_state(callback_query.from_user.id)}')
 
+        await BOT.send_photo(callback_query.from_user.id, photo=InputFile(photo))
         await BOT.send_message(callback_query.from_user.id,
                                msg, reply_markup=inline_kb_start)
 
@@ -142,6 +162,8 @@ async def callback_button_start(callback_query: types.CallbackQuery, state: FSMC
     # await BOT.delete_message(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id)
     user_id = callback_query.from_user.id
     msg = MESSAGES[0]
+    photo = os.getenv('PATH_FOR_IMG') + '0.jpg'
+    await BOT.send_photo(callback_query.from_user.id, photo=InputFile(photo))
     await BOT.send_message(callback_query.from_user.id,
                            msg, reply_markup=inline_kb_yon, parse_mode="Markdown")
 
