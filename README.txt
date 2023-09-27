@@ -7,7 +7,7 @@ python -m venv <venv_bot>
 3. Установите зависимости из файла requirements.txt
 pip install -r requirements.txt
 4. Скачайте папку img в папку проекта по ссылке
-https://drive.google.com/drive/folders/1P2CU99yHVSMJaFOpU7jkpoQY02K-RztK?usp=drive_link
+https://drive.google.com/drive/folders/1P2CU99yHVSMJaFOpU7jkpoQY02K-RztK?usp=sharing
 5. Внесите данные в файл run_github.bat
 Токен бота
 Имя базы данных
