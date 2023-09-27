@@ -162,10 +162,13 @@ async def callback_button_start(callback_query: types.CallbackQuery, state: FSMC
     # await BOT.delete_message(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id)
     user_id = callback_query.from_user.id
     msg = MESSAGES[0]
+    quest = QUESTIONS[0]
     photo = os.getenv('PATH_FOR_IMG') + '0.jpg'
     await BOT.send_photo(callback_query.from_user.id, photo=InputFile(photo))
     await BOT.send_message(callback_query.from_user.id,
-                           msg, reply_markup=inline_kb_yon, parse_mode="Markdown")
+                           msg, parse_mode="Markdown")
+    await BOT.send_message(callback_query.from_user.id,
+                           quest, reply_markup=inline_kb_yon, parse_mode="Markdown")
 
     # смена состояния
     await state.set_state(States.step_0)
@@ -204,7 +207,7 @@ async def view_history_paper(message: types.Message, state: FSMContext):
 # регистрация всех хэндлеров в отдельной ф-ии
 # чтобы потом передать именно ее в нужное место
 def register_handlers_main(DP: Dispatcher):
-    DP.register_message_handler(command_start, commands=['start'])
+    DP.register_message_handler(command_start, commands=['start'], state='*')
     DP.register_callback_query_handler(callback_button_no, text='no', state='*')
     DP.register_callback_query_handler(callback_button_yes, text='yes', state='*')
     DP.register_callback_query_handler(callback_button_start, text='start', state='*')
